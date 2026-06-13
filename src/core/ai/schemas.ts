@@ -52,6 +52,36 @@ export const quizSchema = z.object({
   questions: z.array(quizQuestionSchema).min(1),
 });
 
+export const generatedWordSchema = z.object({
+  word: z.string().min(1),
+  translation: z.string().min(1),
+  // Kept loose; the server normalizes to the DER/DIE/DAS/NONE + POS enums.
+  article: z.string().optional(),
+  plural: z.string().optional(),
+  partOfSpeech: z.string().optional(),
+  example: z.string().optional(),
+});
+
+export const generatedVocabularySchema = z.object({
+  words: z.array(generatedWordSchema).min(1),
+});
+
+// Enrichment for a single word the user typed. `translation` may be empty when the
+// word can't be resolved (offline / not a real word) — the UI then asks for the meaning.
+export const wordLookupSchema = z.object({
+  translation: z.string(),
+  article: z.string().optional(),
+  plural: z.string().optional(),
+  partOfSpeech: z.string().optional(),
+  level: z.string().optional(),
+  example: z.string().optional(),
+  pronunciationHint: z.string().optional(),
+});
+
+export type GeneratedWord = z.infer<typeof generatedWordSchema>;
+export type GeneratedVocabulary = z.infer<typeof generatedVocabularySchema>;
+export type WordLookup = z.infer<typeof wordLookupSchema>;
+
 export type SentencePair = z.infer<typeof sentencePairSchema>;
 export type ClozeSentence = z.infer<typeof clozeSentenceSchema>;
 export type SentenceSuggestion = z.infer<typeof sentenceSuggestionSchema>;

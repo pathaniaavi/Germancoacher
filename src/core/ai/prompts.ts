@@ -69,6 +69,30 @@ export function checkSentencePrompt(ctx: WordContext, userSentence: string): Pro
   };
 }
 
+export function generateVocabularyPrompt(level: string, topic: string, count: number): Prompt {
+  return {
+    system: TUTOR_SYSTEM,
+    user:
+      `Produce a vocabulary list of ${count} common German words for CEFR level ${level} ` +
+      `on the topic "${topic}". For each word give: the base word; for nouns the article as ` +
+      `exactly DER, DIE, or DAS (use NONE for non-nouns) and the plural form; the English ` +
+      `translation; the part of speech (NOUN, VERB, ADJECTIVE, ADVERB, etc.); and one short ` +
+      `example sentence in German. Choose words genuinely appropriate for ${level} learners.`,
+  };
+}
+
+export function lookupWordPrompt(word: string): Prompt {
+  return {
+    system: TUTOR_SYSTEM,
+    user:
+      `A learner wants to save the German word "${word}". Provide its most common English ` +
+      `translation; the article as exactly DER, DIE, or DAS for nouns (NONE otherwise); the ` +
+      `plural for nouns; the part of speech (NOUN, VERB, ADJECTIVE, ADVERB, etc.); the CEFR ` +
+      `level (A1–C2); and one short, natural example sentence in German. If "${word}" is not a ` +
+      `real German word, return an empty translation.`,
+  };
+}
+
 export function generateQuizPrompt(words: WordContext[], count: number): Prompt {
   const list = words.map((w) => `- ${w.word} = ${w.translation}`).join("\n");
   return {

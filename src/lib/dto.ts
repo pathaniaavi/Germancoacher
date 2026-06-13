@@ -66,6 +66,55 @@ export interface PracticeResult {
   nextDueAt: string | null;
 }
 
+export interface QuickAddResult {
+  word: WordDTO;
+  /** Where the enrichment came from. */
+  source: "dictionary" | "ai" | "manual";
+}
+
+/** The fetched-but-not-yet-saved details shown in the Add preview. */
+export interface LookupDetails {
+  word: string;
+  translation: string;
+  article: string;
+  plural: string | null;
+  partOfSpeech: string;
+  level: string;
+  example: string | null;
+  pronunciationHint: string | null;
+}
+
+export interface WordPreview {
+  source: "dictionary" | "ai" | "manual";
+  /** True if this word is already in the user's deck. */
+  exists: boolean;
+  details: LookupDetails;
+}
+
+export interface TopicProgress {
+  level: string;
+  topic: string;
+  wordCount: number;
+  learnedCount: number;
+  percent: number;
+  learned: boolean;
+}
+
+export interface LearnPath {
+  units: TopicProgress[];
+  custom: TopicProgress[];
+  recommended: string | null;
+}
+
+export interface GenerateTopicResult {
+  topic: string;
+  level: string;
+  created: number;
+  skipped: number;
+  words: WordDTO[];
+  source: "claude" | "fallback";
+}
+
 export interface SettingsDTO {
   dailyReviewLimit: number;
   newCardsPerDay: number;

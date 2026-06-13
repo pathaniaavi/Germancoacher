@@ -39,13 +39,36 @@ export type CreateWordInput = z.infer<typeof createWordSchema>;
 export const updateWordSchema = createWordSchema.partial();
 export type UpdateWordInput = z.infer<typeof updateWordSchema>;
 
+// Quick add: just the German word. Translation is optional (used as the offline fallback
+// when AI can't resolve a meaning).
+export const quickAddSchema = z.object({
+  word: z.string().trim().min(1, "Type a word").max(120),
+  translation: z.string().trim().max(200).optional(),
+  topic: z.string().trim().max(60).optional(),
+});
+export type QuickAddInput = z.infer<typeof quickAddSchema>;
+
+export const wordLookupRequestSchema = z.object({
+  word: z.string().trim().min(1, "Type a word").max(120),
+  translation: z.string().trim().max(200).optional(),
+});
+export type WordLookupRequestInput = z.infer<typeof wordLookupRequestSchema>;
+
 export const listWordsQuerySchema = z.object({
   q: z.string().trim().max(120).optional(),
   partOfSpeech: z.enum(PARTS_OF_SPEECH).optional(),
   level: z.enum(LEVELS).optional(),
   filter: z.enum(["all", "due", "weak", "mastered", "archived"]).default("all"),
   tag: z.string().trim().max(40).optional(),
+  topic: z.string().trim().max(60).optional(),
 });
+
+export const generateTopicSchema = z.object({
+  level: z.enum(LEVELS).default("A1"),
+  topic: z.string().trim().min(1).max(60),
+  count: z.number().int().min(3).max(25).default(12),
+});
+export type GenerateTopicInput = z.infer<typeof generateTopicSchema>;
 export type ListWordsQuery = z.infer<typeof listWordsQuerySchema>;
 
 export const reviewAnswerSchema = z.object({

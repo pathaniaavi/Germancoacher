@@ -14,6 +14,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { ProgressRing } from "@/components/ui/ProgressRing";
 import { Input } from "@/components/ui/form";
+import { PronounceButton } from "@/components/audio/PronounceButton";
 
 const FILTERS = [
   { key: "all", label: "All" },
@@ -125,6 +126,7 @@ export default function WordsPage() {
                     <div style={{ color: "var(--text-muted)", fontSize: "var(--fs-sm)" }}>{w.translation}</div>
                   </div>
                   <div style={{ display: "flex", gap: "var(--space-2)", alignItems: "center", flexWrap: "wrap" }}>
+                    <PronounceButton text={headword(w.word, w.article)} label="" />
                     <Badge>{POS_LABEL[w.partOfSpeech]}</Badge>
                     <Badge tone="neutral">{w.level}</Badge>
                     <Badge tone={w.recognitionDueAt && new Date(w.recognitionDueAt) <= new Date() ? "warning" : "neutral"}>

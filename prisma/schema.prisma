@@ -180,6 +180,9 @@ model VocabularyWord {
   notes           String?      @db.Text
   pronunciationHint String?
   status          WordStatus   @default(ACTIVE)
+  // Learning-path topic this word belongs to (e.g. "Food & Drink"). Free-form so AI-generated
+  // and custom topics both fit; the curriculum config supplies the recommended ordering.
+  topic           String?
 
   // --- Recognition SRS state (meaning / article / plural) ---
   recognitionEase           Float     @default(2.5)
@@ -219,6 +222,7 @@ model VocabularyWord {
   @@index([userId, masteryScore])
   @@index([userId, partOfSpeech])
   @@index([userId, level])
+  @@index([userId, topic])
 }
 
 model Tag {

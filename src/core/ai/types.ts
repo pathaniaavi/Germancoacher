@@ -4,11 +4,13 @@
  * The app depends only on this interface, never on a concrete provider.
  */
 import type {
+  GeneratedVocabulary,
   MeaningExplanation,
   Quiz,
   SentenceCheck,
   SentenceSuggestion,
   UsageExplanation,
+  WordLookup,
 } from "./schemas";
 
 export type ArticleCode = "DER" | "DIE" | "DAS" | "NONE";
@@ -35,4 +37,8 @@ export interface AIService {
   checkSentence(ctx: WordContext, userSentence: string): Promise<SentenceCheck>;
   /** Generate a short multiple-choice quiz from the given words. */
   generateQuiz(words: WordContext[], count: number): Promise<Quiz>;
+  /** Generate a vocabulary pack for a level + topic (e.g. A1 · Food). */
+  generateVocabulary(level: string, topic: string, count: number): Promise<GeneratedVocabulary>;
+  /** Enrich a single German word the user typed (translation, article, plural, example, level). */
+  lookupWord(word: string): Promise<WordLookup>;
 }

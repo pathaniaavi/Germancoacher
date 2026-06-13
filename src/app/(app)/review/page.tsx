@@ -14,6 +14,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { RatingButtons } from "@/components/review/RatingButtons";
 import { FlashCard } from "@/components/review/FlashCard";
+import { PronounceButton } from "@/components/audio/PronounceButton";
 
 const RATINGS: Rating[] = ["AGAIN", "HARD", "GOOD", "EASY"];
 
@@ -159,6 +160,13 @@ export default function ReviewPage() {
 
       {status === "success" && current && !done && (
         <>
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: "var(--space-3)" }}>
+            <PronounceButton
+              text={(current.article && current.article !== "NONE" ? `${ARTICLE_LABEL[current.article]} ` : "") + current.word}
+              variant="secondary"
+              label="Hear it"
+            />
+          </div>
           <FlashCard
             flipped={revealed}
             onFlip={() => setRevealed(true)}

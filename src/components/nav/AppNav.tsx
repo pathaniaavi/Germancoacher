@@ -8,6 +8,7 @@ import styles from "./AppNav.module.css";
 
 const LINKS = [
   { href: "/dashboard", label: "Dashboard" },
+  { href: "/learn", label: "Learn" },
   { href: "/words", label: "Words" },
   { href: "/review", label: "Review" },
   { href: "/practice", label: "Practice" },

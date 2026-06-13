@@ -5,16 +5,20 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { ZodSchema } from "zod";
 import {
+  generatedVocabularySchema,
   meaningExplanationSchema,
   quizSchema,
   sentenceCheckSchema,
   sentenceSuggestionSchema,
   usageExplanationSchema,
+  wordLookupSchema,
+  type GeneratedVocabulary,
   type MeaningExplanation,
   type Quiz,
   type SentenceCheck,
   type SentenceSuggestion,
   type UsageExplanation,
+  type WordLookup,
 } from "@/core/ai/schemas";
 import type { AIService, WordContext } from "@/core/ai/types";
 import {
@@ -22,6 +26,8 @@ import {
   explainMeaningPrompt,
   explainUsagePrompt,
   generateQuizPrompt,
+  generateVocabularyPrompt,
+  lookupWordPrompt,
   suggestSentencesPrompt,
   type Prompt,
 } from "@/core/ai/prompts";
@@ -116,6 +122,47 @@ const TOOLS: Record<string, ToolDef> = {
       required: ["questions"],
     },
   },
+  vocab: {
+    name: "provide_vocabulary",
+    description: "Return the vocabulary list for the level and topic.",
+    input_schema: {
+      type: "object",
+      properties: {
+        words: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              word: str,
+              translation: str,
+              article: { type: "string", enum: ["DER", "DIE", "DAS", "NONE"] },
+              plural: str,
+              partOfSpeech: str,
+              example: str,
+            },
+            required: ["word", "translation"],
+          },
+        },
+      },
+      required: ["words"],
+    },
+  },
+  lookup: {
+    name: "provide_word_details",
+    description: "Return the details for one German word.",
+    input_schema: {
+      type: "object",
+      properties: {
+        translation: str,
+        article: { type: "string", enum: ["DER", "DIE", "DAS", "NONE"] },
+        plural: str,
+        partOfSpeech: str,
+        level: { type: "string", enum: ["A1", "A2", "B1", "B2", "C1", "C2"] },
+        example: str,
+      },
+      required: ["translation"],
+    },
+  },
 };
 
 export interface ClaudeOptions {
@@ -171,5 +218,18 @@ export class ClaudeAIService implements AIService {
 
   generateQuiz(words: WordContext[], count: number): Promise<Quiz> {
     return this.run(generateQuizPrompt(words, count), TOOLS.quiz!, quizSchema, 2048);
+  }
+
+  generateVocabulary(level: string, topic: string, count: number): Promise<GeneratedVocabulary> {
+    return this.run(
+      generateVocabularyPrompt(level, topic, count),
+      TOOLS.vocab!,
+      generatedVocabularySchema,
+      3072,
+    );
+  }
+
+  lookupWord(word: string): Promise<WordLookup> {
+    return this.run(lookupWordPrompt(word), TOOLS.lookup!, wordLookupSchema, 512);
   }
 }

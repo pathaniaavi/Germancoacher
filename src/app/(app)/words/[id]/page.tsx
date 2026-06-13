@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { ProgressRing } from "@/components/ui/ProgressRing";
+import { PronounceButton } from "@/components/audio/PronounceButton";
 
 interface ExplainResponse {
   source: string;
@@ -86,9 +87,15 @@ export default function WordDetailPage() {
         }
         subtitle={w.translation}
         actions={
-          <Badge tone={w.status === "MASTERED" ? "success" : w.status === "ARCHIVED" ? "neutral" : "accent"}>
-            {w.status.toLowerCase()}
-          </Badge>
+          <div style={{ display: "flex", gap: "var(--space-2)", alignItems: "center" }}>
+            <PronounceButton
+              text={(w.article !== "NONE" ? `${ARTICLE_LABEL[w.article]} ` : "") + w.word}
+              variant="secondary"
+            />
+            <Badge tone={w.status === "MASTERED" ? "success" : w.status === "ARCHIVED" ? "neutral" : "accent"}>
+              {w.status.toLowerCase()}
+            </Badge>
+          </div>
         }
       />
 
@@ -104,6 +111,7 @@ export default function WordDetailPage() {
           <Row k="Article" v={w.article === "NONE" ? "—" : <span style={{ color: articleColorVar(w.article) }}>{ARTICLE_LABEL[w.article]}</span>} />
           <Row k="Plural" v={w.plural ?? "—"} />
           <Row k="Part of speech" v={POS_LABEL[w.partOfSpeech]} />
+          <Row k="Pronunciation" v={w.pronunciationHint ?? "—"} />
           <Row k="Level" v={w.level} />
           <Row k="Tags" v={w.tags.length ? w.tags.join(", ") : "—"} />
           <Row k="Next review" v={formatDue(w.recognitionDueAt)} />
