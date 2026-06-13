@@ -1,0 +1,121 @@
+/*
+ * Design tokens. Light is the default; [data-theme="dark"] swaps the palette.
+ * Components reference only these variables — never raw hex — so theming is a token swap.
+ * Typography is intentionally compact for an information-dense learning tool.
+ */
+
+:root {
+  /* Neutral palette (light) — warm paper, not cold gray */
+  --bg: #f6f4ee;
+  --surface: #fffdf9;
+  --surface-2: #efebe1;
+  --border: #e6e1d5;
+  --border-strong: #d3ccbb;
+  --text: #211f19;
+  --text-muted: #6a6354;
+  --text-faint: #978f7d;
+
+  /* Brand / accent */
+  --accent: #3b53d4;
+  --accent-hover: #2c40b3;
+  --accent-soft: #e6e9fb;
+  --on-accent: #ffffff;
+  --accent-grad: linear-gradient(135deg, #4a62e6 0%, #3b53d4 55%, #5b3fd4 100%);
+
+  /* Semantic */
+  --success: #2f9e44;
+  --success-soft: #e6f4ea;
+  --warning: #e8a200;
+  --warning-soft: #fcf3da;
+  --danger: #e03131;
+  --danger-soft: #fcebeb;
+
+  /* Review rating colors (Again / Hard / Good / Easy) */
+  --rate-again: #e03131;
+  --rate-hard: #e8a200;
+  --rate-good: #2f9e44;
+  --rate-easy: #3b5bdb;
+
+  /* German article mnemonic colors (der / die / das) */
+  --der: #2f6feb; /* masculine — blue */
+  --die: #e8638f; /* feminine — pink */
+  --das: #2f9e44; /* neuter — green */
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-8: 48px;
+
+  /* Typography — compact body, editorial serif for display */
+  --font-display: var(--ff-display), "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --font-sans: var(--ff-body), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.8125rem;
+  --fs-base: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.625rem;
+  --fs-2xl: 2.25rem;
+  --lh-tight: 1.25;
+  --lh-base: 1.5;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.08);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.1);
+  --shadow-lg: 0 12px 32px rgba(16, 24, 40, 0.16);
+
+  --ring: 0 0 0 3px var(--accent-soft);
+  --transition: 140ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  --maxw-app: 1120px;
+  --maxw-reading: 680px;
+}
+
+[data-theme="dark"] {
+  --bg: #14130f;
+  --surface: #1c1a15;
+  --surface-2: #25221a;
+  --border: #322e24;
+  --border-strong: #433d30;
+  --text: #ece7db;
+  --text-muted: #a59c89;
+  --text-faint: #756d5c;
+
+  --accent: #8094ff;
+  --accent-hover: #99a8ff;
+  --accent-soft: #20243a;
+  --on-accent: #14130f;
+  --accent-grad: linear-gradient(135deg, #6b7dff 0%, #5b6cf0 55%, #7d5bf0 100%);
+
+  --success: #51cf66;
+  --success-soft: #16241a;
+  --warning: #ffd43b;
+  --warning-soft: #2a2412;
+  --danger: #ff6b6b;
+  --danger-soft: #2a1717;
+
+  --rate-again: #ff6b6b;
+  --rate-hard: #ffd43b;
+  --rate-good: #51cf66;
+  --rate-easy: #5c7cfa;
+
+  --der: #4d8bff;
+  --die: #f08fb0;
+  --das: #51cf66;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+  --ring: 0 0 0 3px rgba(92, 124, 250, 0.35);
+}

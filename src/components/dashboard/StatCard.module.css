@@ -1,0 +1,33 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-4);
+}
+.label {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  font-weight: 550;
+}
+.value {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.sub {
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+}
+.neutral {
+  color: var(--text);
+}
+.accent {
+  color: var(--accent);
+}
+.warning {
+  color: var(--warning);
+}
+.success {
+  color: var(--success);
+}
